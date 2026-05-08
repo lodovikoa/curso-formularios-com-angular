@@ -1,0 +1,16 @@
+<fieldset class="fieldset">
+  <legend class="fieldset-legend">Page title</legend>
+  <input type="text" class="input" placeholder="My awesome page" [(ngModel)]="message" #messageInput="ngModel" />
+  <p class="label">You can edit page title later on from settings</p>
+</fieldset>
+
+<div class="mt-4">Mensagem: {{ message() }}</div>
+
+<div class="mt-4 flex flex-col gap-2">
+  <p class="label">Válido: {{ messageInput.valid }}</p>
+  <p class="label">Inválido: {{ messageInput.invalid }}</p>
+  <p class="label">Está sujo: {{ messageInput.dirty }}</p>
+  <p class="label">Está limpo: {{ messageInput.pristine }}</p>
+  <p class="label">Está tocado: {{ messageInput.touched }}</p>
+  <p class="label">Está Desativado: {{ messageInput.disabled }}</p>
+</div>
