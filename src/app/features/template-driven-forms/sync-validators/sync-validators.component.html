@@ -1,9 +1,24 @@
 <fieldset class="fieldset">
   <legend class="fieldset-legend">Page title</legend>
-  <input type="text" class="input" placeholder="My awesome page" [(ngModel)]="message" #messageInput="ngModel" />
-  <p class="label">You can edit page title later on from settings</p>
+  <input type="text"
+    class="input"
+    [class.input-error]="messageInput.touched && messageInput.invalid"
+    placeholder="My awesome page"
+    [(ngModel)]="message"
+    #messageInput="ngModel"
+    required
+    minlength="10" />
+  @if(messageInput.touched){
+    @if(messageInput.hasError('required')) {
+      <p class="text-error">Campo Obrigatório</p>
+    }
+    @if(messageInput.hasError('minlength')) {
+      <p class="text-error">O campo deve ter {{messageInput.getError('minlength').requiredLength}} ou mais caracteres. Informado: {{messageInput.getError('minlength').actualLength}} caracteres </p>
+    }
+  }
 </fieldset>
 
+<div class="mt-4">Erros: {{ messageInput.errors | json }}</div>
 <div class="mt-4">Mensagem: {{ message() }}</div>
 
 <div class="mt-4 flex flex-col gap-2">
