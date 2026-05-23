@@ -1,20 +1,31 @@
 <fieldset class="fieldset">
-  <legend class="fieldset-legend">Page title</legend>
-  <input type="text"
+  <legend class="fieldset-legend">Pakavra que deve ser inclusa</legend>
+  <input
+    type="text"
+    class="input"
+    placeholder="Digite a palavra que deve ser inclusa"
+    [(ngModel)]="includeWord" />
+</fieldset>
+
+<fieldset class="fieldset">
+  <legend class="fieldset-legend">Digite uma frase</legend>
+  <input
+    type="text"
     class="input"
     [class.input-error]="messageInput.touched && messageInput.invalid"
-    placeholder="My awesome page"
+    placeholder="Digite uma frase"
     [(ngModel)]="message"
     #messageInput="ngModel"
-    required
-    minlength="10" />
+    required minlength="10"
+    [appIncludeWordValidator]="includeWord()" />
   @if(messageInput.touched){
-    @if(messageInput.hasError('required')) {
-      <p class="text-error">Campo Obrigatório</p>
-    }
-    @if(messageInput.hasError('minlength')) {
-      <p class="text-error">O campo deve ter {{messageInput.getError('minlength').requiredLength}} ou mais caracteres. Informado: {{messageInput.getError('minlength').actualLength}} caracteres </p>
-    }
+  @if(messageInput.hasError('required')) {
+  <p class="text-error">Campo Obrigatório</p>
+  }
+  @if(messageInput.hasError('minlength')) {
+  <p class="text-error">O campo deve ter {{messageInput.getError('minlength').requiredLength}} ou mais caracteres.
+    Informado: {{messageInput.getError('minlength').actualLength}} caracteres </p>
+  }
   }
 </fieldset>
 

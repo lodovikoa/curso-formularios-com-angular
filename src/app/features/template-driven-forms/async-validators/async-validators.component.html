@@ -1,0 +1,21 @@
+<fieldset class="fieldset">
+  <legend class="fieldset-legend">Nickname</legend>
+  <input
+    type="text"
+    class="input"
+    placeholder="Digite o Nickname"
+    [(ngModel)]="nickName"
+    #nickNameModel="ngModel"
+    required
+    appUniqueNickname
+    [class.input-error]="nickNameModel.touched && nickNameModel.invalid" />
+
+    @if(nickNameModel.touched) {
+      @if(nickNameModel.hasError('required')) {
+        <p class="text-error">Nickname é obrigatório.</p>
+      }
+      @if(nickNameModel.hasError('isNicknameTaken')) {
+        <p class="text-error">Nickname já está em uso.</p>
+      }
+    }
+</fieldset>
