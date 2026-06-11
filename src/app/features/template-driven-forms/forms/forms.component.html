@@ -1,0 +1,41 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" [appIsPasswordEqual]="['password', 'confirmPassword']">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Nome</legend>
+    <input type="text" class="input" placeholder="Nome" name="nome" ngModel required />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Email</legend>
+    <input type="text" class="input" placeholder="Email" name="email" ngModel email required />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Senha</legend>
+    <input type="password" class="input" placeholder="Senha" name="password" ngModel required />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Confirme a Senha</legend>
+    <input type="password" class="input" placeholder="Confirme a Senha" name="confirmPassword" ngModel required />
+  </fieldset>
+
+  <fieldset ngModelGroup="address" #address="ngModelGroup"
+    class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <legend class="fieldset-legend">Endereço</legend>
+
+    <label class="label">Rua</label>
+    <input type="text" class="input" placeholder="Av Paulista" name="street" ngModel required />
+
+    <label class="label">Número</label>
+    <input type="text" class="input" placeholder="123" name="number" ngModel required />
+
+    <label class="label">Complemento</label>
+    <input type="text" class="input" placeholder="Apartment, suite, etc." name="complement" ngModel />
+  </fieldset>
+
+  <div>Form Erros: {{ form.errors | json}}</div>
+  <div>Form Value: {{ form.value | json }}</div>
+  <div>Address Value: {{ address.value | json }}</div>
+
+  <button type="submit" class="btn btn-primary w-full mt-4" [disabled]="form.invalid">Enviar</button>
+</form>
