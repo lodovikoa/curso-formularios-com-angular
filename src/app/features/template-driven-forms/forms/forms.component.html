@@ -1,22 +1,27 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" [appIsPasswordEqual]="['password', 'confirmPassword']">
   <fieldset class="fieldset">
     <legend class="fieldset-legend">Nome</legend>
-    <input type="text" class="input" placeholder="Nome" name="nome" ngModel required />
+    <input type="text" class="input" placeholder="Nome" name="nome" ngModel #nameModel="ngModel" required />
+    <app-error-messages [control]="nameModel.control"></app-error-messages>
   </fieldset>
 
   <fieldset class="fieldset">
     <legend class="fieldset-legend">Email</legend>
-    <input type="text" class="input" placeholder="Email" name="email" ngModel email required />
+    <input type="text" class="input" placeholder="Email" name="email" ngModel #emailModel="ngModel" email required />
+    <app-error-messages [control]="emailModel.control"></app-error-messages>
   </fieldset>
 
   <fieldset class="fieldset">
     <legend class="fieldset-legend">Senha</legend>
-    <input type="password" class="input" placeholder="Senha" name="password" ngModel required />
+    <input type="password" class="input" placeholder="Senha" name="password" ngModel #passwordModel="ngModel" required />
+    <app-error-messages [control]="passwordModel.control"></app-error-messages>
   </fieldset>
 
   <fieldset class="fieldset">
     <legend class="fieldset-legend">Confirme a Senha</legend>
-    <input type="password" class="input" placeholder="Confirme a Senha" name="confirmPassword" ngModel required />
+    <input type="password" class="input" placeholder="Confirme a Senha" name="confirmPassword" ngModel #confirmPasswordModel="ngModel" required />
+    <app-error-messages [control]="confirmPasswordModel.control"></app-error-messages>
+    <app-error-messages [control]="form.control"></app-error-messages>
   </fieldset>
 
   <fieldset ngModelGroup="address" #address="ngModelGroup"
@@ -24,13 +29,16 @@
     <legend class="fieldset-legend">Endereço</legend>
 
     <label class="label">Rua</label>
-    <input type="text" class="input" placeholder="Av Paulista" name="street" ngModel required />
+    <input type="text" class="input" placeholder="Av Paulista" name="street" ngModel #streetModel="ngModel" required />
+    <app-error-messages [control]="streetModel.control"></app-error-messages>
 
     <label class="label">Número</label>
-    <input type="text" class="input" placeholder="123" name="number" ngModel required />
+    <input type="text" class="input" placeholder="123" name="number" ngModel #numberModel="ngModel" required />
+    <app-error-messages [control]="numberModel.control"></app-error-messages>
 
     <label class="label">Complemento</label>
-    <input type="text" class="input" placeholder="Apartment, suite, etc." name="complement" ngModel />
+    <input type="text" class="input" placeholder="Apartment, suite, etc." name="complement" ngModel #complementModel="ngModel" />
+    <app-error-messages [control]="complementModel.control"></app-error-messages>
   </fieldset>
 
   <div>Form Erros: {{ form.errors | json}}</div>

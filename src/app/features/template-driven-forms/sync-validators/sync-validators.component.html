@@ -12,7 +12,6 @@
   <input
     type="text"
     class="input"
-    [class.input-error]="messageInput.touched && messageInput.invalid"
     placeholder="Digite uma frase"
     [(ngModel)]="message"
     #messageInput="ngModel"

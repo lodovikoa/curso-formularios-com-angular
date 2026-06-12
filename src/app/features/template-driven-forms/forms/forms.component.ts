@@ -2,13 +2,15 @@ import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IsPasswordEqualDirective } from './validators/is-password-equal/is-password-equal.directive';
+import { ErrorMessagesComponent } from '../../../shared/error-messages/components/error-messages/error-messages.component';
 
 @Component({
   selector: 'app-forms',
   imports: [
     FormsModule,
     JsonPipe,
-    IsPasswordEqualDirective
+    IsPasswordEqualDirective,
+    ErrorMessagesComponent
   ],
   templateUrl: './forms.component.html',
   styleUrl: './forms.component.css',
