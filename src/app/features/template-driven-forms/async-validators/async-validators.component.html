@@ -10,16 +10,5 @@
     appUniqueNickname
     minlength="6"
     [class.input-error]="nickNameModel.touched && nickNameModel.invalid" />
-
-    @if(nickNameModel.touched) {
-      @if(nickNameModel.hasError('required')) {
-        <p class="text-error">Nickname é obrigatório.</p>
-      }
-      @if(nickNameModel.hasError('minlength')) {
-        <p class="text-error">Nickname deve ter pelo menos 6 caracteres.</p>
-      }
-      @if(nickNameModel.hasError('isNicknameTaken')) {
-        <p class="text-error">Nickname já está em uso.</p>
-      }
-    }
+    <app-error-messages [control]="nickNameModel.control"></app-error-messages>
 </fieldset>

@@ -1,12 +1,8 @@
-import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl } from '@angular/forms';
-import { filter } from 'rxjs';
-
-const errorMessages: Record<string, (...args: any[]) => string> = {
-  required: () => 'Campo obrigatório.',
-  email: () => 'Por favor, insira um endereço de email válido.',
-  passwordsAreNotEqual: ({ field1, field2 }) => `Os campos "${field1}" e "${field2}" devem ser iguais.`,
-};
+import { debounceTime, filter } from 'rxjs';
+import { ErrorMessageResolverService } from '../../services/error-message-resolver.service';
 
 @Component({
   selector: 'app-error-messages',
@@ -17,28 +13,32 @@ const errorMessages: Record<string, (...args: any[]) => string> = {
 })
 export class ErrorMessagesComponent implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly errorMessageResolverService = inject(ErrorMessageResolverService);
+
+
   control = input.required<AbstractControl>();
-  currentErrorMessage = signal<string | null>(null);
+  protected currentErrorMessage = signal<string | null>(null);
+  protected showPendingMessage = signal(false);
+
+  protected pendingMessage = signal(this.errorMessageResolverService.pendingMessage);
 
   ngOnInit(): void {
     this.control()
-      .events.pipe(filter(() => this.control().touched))
+      .events.pipe(
+        takeUntilDestroyed(this.destroyRef),
+        debounceTime(50),
+        filter(() => this.control().touched || this.control().dirty))
       .subscribe(() => {
+        this.showPendingMessage.set(this.control().pending);
+
         if (this.control().errors === null) {
           this.currentErrorMessage.set(null);
           return;
         }
 
-        for (const key in this.control().errors) {
-          const messageFn = errorMessages[key];
-          const errorData = this.control().errors![key];
-
-
-          if (messageFn) {
-            this.currentErrorMessage.set(messageFn(errorData));
-            break;
-          }
-        }
+        const message = this.errorMessageResolverService.getMessage(this.control().errors!);
+        this.currentErrorMessage.set(message);
       });
 
   }

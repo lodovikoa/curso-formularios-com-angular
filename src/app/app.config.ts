@@ -2,10 +2,17 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
+import { provideErrorMessages } from './shared/error-messages/provide-functions/provide-error-messages.provide';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
+    provideRouter(routes),
+    provideErrorMessages({
+      errorMessages: {
+        required: () => 'required [custom message]',
+      },
+      pendingMessage: 'Validando... [custom message]'
+    })
   ]
 };
