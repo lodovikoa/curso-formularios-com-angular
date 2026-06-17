@@ -1,0 +1,29 @@
+<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 flex flex-col gap-3">
+  <legend class="fieldset-legend">Validações Síncronas</legend>
+
+  <select class="block w-full border border-base-300 bg-base-100 text-base-content rounded-btn p-2 focus:outline-primary outline-offset-2"
+          size="5"
+          multiple
+          [ngModel]="selectedSyncValidations()"
+          (ngModelChange)="selectedSyncValidations.set($event)">
+    <option value="" disabled class="p-2 rounded-md my-0.5"> Selecione as validações síncronas </option>
+    @for (key of sincValidationsKeys(); track key) {
+      <option [value]="key" class="p-2 rounded-md hover:bg-base-300 checked:bg-primary checked:text-primary-content my-0.5">
+        {{ key }}
+      </option>
+    }
+  </select>
+
+  <button class="btn btn-primary w-full" (click)="addSyncValidators()">Adicionar validadores</button>
+  <button class="btn btn-primary w-full" (click)="setSyncValidators()">Sobrescrever validadores</button>
+  <button class="btn btn-primary w-full" (click)="removeSyncValidators()">Remover validadores</button>
+  <button class="btn btn-primary w-full" (click)="clearSyncValidators()">Limpar validadores</button>
+  <button class="btn btn-primary w-full" (click)="updateValueAndValidity()">Atualizar validadores</button>
+
+</fieldset>
+
+<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+  <legend class="fieldset-legend">Nome</legend>
+  <input type="text" class="input" placeholder="Digite seu nome" [formControl]="name" />
+  <app-error-messages [control]="name" />
+</fieldset>
