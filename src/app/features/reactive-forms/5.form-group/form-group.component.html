@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="submit($event)">
+  <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <legend class="fieldset-legend">Cadastro</legend>
+
+    <label for="nmNome" class="label">Nome</label>
+    <input type="text" id="nmNome" class="input" placeholder="Digite seu nome" formControlName="name" />
+    <app-error-messages [control]="form.controls.name" />
+
+    <label for="nmEmail" class="label">Email</label>
+    <input type="text" id="nmEmail" class="input" placeholder="seuemail@gmail.com" formControlName="email" />
+    <app-error-messages [control]="form.controls.email" />
+
+    <button class="btn btn-primary mt-4">Salvar</button>
+
+    Formulário: {{ form.value | json}}
+  </fieldset>
+</form>
