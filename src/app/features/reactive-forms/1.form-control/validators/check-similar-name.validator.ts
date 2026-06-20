@@ -8,7 +8,7 @@ interface iName {
   name: string;
 }
 
-export function checkSimilarName() {
+export function checkSimilarNameValidator() {
 
   const httpClient = inject(HttpClient);
 
