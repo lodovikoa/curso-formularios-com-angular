@@ -4,11 +4,13 @@ import { ValidationsComponent } from './2.validations/validations.component';
 import { UsingMarkFunctionsComponent } from './3.using-mark-functions/using-mark-functions.component';
 import { SetErrorsComponent } from './4.set-errors/set-errors.component';
 import { FormGroupComponent } from './5.form-group/form-group.component';
+import { ManipulateControlsComponent } from './6.manipulate-controls/manipulate-controls.component';
 
 export const reactiveFormsFormControlRoutes: Routes = [
   { path: 'form-control', component: FormControlComponent },
   { path: 'validations', component: ValidationsComponent },
-  { path: 'Using-Mark-Functions', component: UsingMarkFunctionsComponent },
-  { path: 'Set-Errors', component: SetErrorsComponent },
-  { path: 'Form-Group', component: FormGroupComponent }
+  { path: 'using-mark-functions', component: UsingMarkFunctionsComponent },
+  { path: 'set-errors', component: SetErrorsComponent },
+  { path: 'form-group', component: FormGroupComponent },
+  { path: 'manipulate-controls', component: ManipulateControlsComponent }
 ];

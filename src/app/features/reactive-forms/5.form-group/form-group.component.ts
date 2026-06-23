@@ -1,4 +1,4 @@
-import { JsonPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ErrorMessagesComponent } from '../../../shared/error-messages/components/error-messages/error-messages.component';
@@ -10,9 +10,14 @@ function createStorage(key: string) {
   }
 }
 
+interface IFormContract {
+  name: FormControl<string | null>;
+  email: FormControl<string>;
+}
+
 @Component({
   selector: 'app-form-group',
-  imports: [ ReactiveFormsModule, JsonPipe, ErrorMessagesComponent ],
+  imports: [ReactiveFormsModule, JsonPipe, ErrorMessagesComponent, AsyncPipe],
   templateUrl: './form-group.component.html',
   styleUrl: './form-group.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,10 +26,16 @@ export class FormGroupComponent implements OnInit {
 
   draftStorage = createStorage('draft-form');
 
-  protected form = new FormGroup({
-    name: new FormControl('', { validators: [Validators.required]}),
-    email: new FormControl('', { validators: [Validators.required, Validators.email] })
+  protected form = new FormGroup<IFormContract>({
+    name: new FormControl('', { validators: [Validators.required] }),
+    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
   })
+
+  toggle() {
+    this.form.controls.email.disabled
+      ? this.form.controls.email.enable({ onlySelf: true, emitEvent: true })
+      : this.form.controls.email.disable({ onlySelf: true, emitEvent: true });
+  }
 
   ngOnInit(): void {
     this.form.valueChanges.subscribe((value) => {
@@ -39,12 +50,16 @@ export class FormGroupComponent implements OnInit {
   protected setDraftData() {
     const draftData = this.draftStorage.get();
 
-    if(draftData) {
+    if (draftData) {
       this.form.patchValue(draftData, {
         emitEvent: false
       });
     }
 
+  }
+
+  protected clearField() {
+    this.form.controls.name.setValue('', { onlySelf: true });
   }
 
   protected submit(event: Event) {

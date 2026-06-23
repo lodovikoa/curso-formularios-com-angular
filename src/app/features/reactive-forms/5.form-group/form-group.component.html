@@ -5,13 +5,22 @@
     <label for="nmNome" class="label">Nome</label>
     <input type="text" id="nmNome" class="input" placeholder="Digite seu nome" formControlName="name" />
     <app-error-messages [control]="form.controls.name" />
+    <button class="btn btn-primary btn-outline btn-xs" (click)="clearField()">Limpar</button>
 
     <label for="nmEmail" class="label">Email</label>
     <input type="text" id="nmEmail" class="input" placeholder="seuemail@gmail.com" formControlName="email" />
     <app-error-messages [control]="form.controls.email" />
+    <button class="btn btn-primary btn-xs btn-outline" (click)="toggle()">
+      {{ form.controls.email.disabled ? 'Habilitar' : 'Desabilitar'}}
+    </button>
 
-    <button class="btn btn-primary mt-4">Salvar</button>
+    <button class="btn btn-primary mt-4" [disabled]="form.invalid">Salvar</button>
 
-    Formulário: {{ form.value | json}}
+    <pre>valueChanges        : {{ form.valueChanges | async | json }}</pre>
+    <pre>email.valueChanges  : {{ form. controls.email.valueChanges | async | json }}</pre>
+    <pre>email.statusChanges : {{ form. controls.email.statusChanges | async | json }}</pre>
+
+    <pre> Valores     : {{ form.value | json}} </pre>
+    <pre> getRawValue : {{ form.getRawValue() | json}} </pre>
   </fieldset>
 </form>
