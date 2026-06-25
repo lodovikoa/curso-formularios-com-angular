@@ -1,22 +1,29 @@
 {
+  "user-preferences": {
+    "receiveEmails": false,
+    "receivePushNotifications": false,
+    "receiveTextMessages": false,
+    "showPhoneOnProfile": true
+  },
   "nicknames": [
     {
-      "id": 1,
+      "id": "1",
       "nickname": "lodoviko"
     }
   ],
   "names": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Ricardo Nunes"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "João Silva"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Gabriel Santos"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
