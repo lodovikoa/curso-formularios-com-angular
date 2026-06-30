@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+  <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <legend class="fieldset-legend">Page title</legend>
+
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">Tipo de conta</legend>
+      <select id="tpConta" class="select" formControlName="accountType">
+        <option disabled selected>Escolha do tipo de conta</option>
+        @for (item of accountTypes(); track $index) {
+          <option [value]="item"> {{ item }} </option>
+        }
+      </select>
+    </fieldset>
+
+    <form formGroupName="privacySettings">
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Visibilidade da conta</legend>
+        <select id="tpVisibilidade" class="select" formControlName="visibility">
+          <option disabled selected>Escolha a visibilidade da conta</option>
+          @for (item of accountVisibilities(); track $index) {
+            <option [value]="item"> {{ item }} </option>
+          }
+        </select>
+    </fieldset>
+
+    </form>
+  </fieldset>
+
+  <div>
+    <pre>Form Value: {{ form.value | json }} </pre>
+    <pre>Form Value: {{ form.errors | json }} </pre>
+  </div>
+</form>

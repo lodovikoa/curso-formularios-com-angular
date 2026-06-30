@@ -1,0 +1,31 @@
+<form [formGroup]="form">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Nome</legend>
+    <input id="nmNome" type="text" class="input" placeholder="Digite o nome" formControlName="name" />
+    <app-error-messages [control]="form.controls.name" />
+  </fieldset>
+  <fieldset class="fieldset" formArrayName="emails" >
+    <legend class="fieldset-legend">Emails</legend>
+
+    @for (item of form.controls.emails.controls; track item) {
+      <div class="join">
+        <div>
+            <input class="input join-item" placeholder="Digite o nome" [formControlName]="$index"  />
+            <app-error-messages [control]="item" />
+        </div>
+          @if(form.controls.emails.controls.length > 1) {
+            <button class="btn btn-error join-item" (click)="removeEmail($index)">Remover</button>
+          }
+        </div>
+    }
+
+    <button class="btn btn-primary btn-xs" (click)="addEmail()" >Adicionar email</button>
+    <app-error-messages [control]="form.controls.emails" />
+
+  </fieldset>
+
+  <button class="btn btn-primary" [disabled]="form.invalid"> Salvar </button>
+
+  <pre>Valores: {{ form.value | json }}</pre>
+</form>
+
