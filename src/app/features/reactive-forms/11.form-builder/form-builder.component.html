@@ -1,0 +1,40 @@
+<form [formGroup]="form" action="">
+  <button class="btn btn-primary" (click)="form.reset()"> Resetar </button>
+
+  <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <legend class="fieldset-legend">Dados pessoais</legend>
+
+    <label class="label" for="nmName">Nome</label>
+    <input id="nmName" type="text" class="input" placeholder="Digite o nome" formControlName="name" />
+    <app-error-messages [control]="form.controls.name"></app-error-messages>
+
+    <label class="label" for="dsEmail">Email</label>
+    <input id="dsEmail" type="email" class="input" placeholder="Digite o email" formControlName="email" />
+    <app-error-messages [control]="form.controls.email"></app-error-messages>
+
+  </fieldset>
+
+  <fieldset formGroupName="address" class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <legend class="fieldset-legend">Endereço</legend>
+
+    <label class="label" for="dsStreet">Rua</label>
+    <input id="dsStreet" type="text" class="input" placeholder="Digite o nome da rua" formControlName="street" />
+    <app-error-messages [control]="form.controls.address.controls.street"></app-error-messages>
+
+    <label class="label" for="dsNumber">Número</label>
+    <input id="dsNumber" type="text" class="input" placeholder="Digite o número" formControlName="number" />
+    <app-error-messages [control]="form.controls.address.controls.number"></app-error-messages>
+
+    <label class="label" for="dsCity">Cidade</label>
+    <input id="dsCity" type="text" class="input" placeholder="Digite o nome da cidade" formControlName="city" />
+    <app-error-messages [control]="form.controls.address.controls.city"></app-error-messages>
+
+    <label class="label" for="dsState">Estado</label>
+    <input id="dsState" type="text" class="input" placeholder="Digite o nome do estado" formControlName="state" />
+    <app-error-messages [control]="form.controls.address.controls.state"></app-error-messages>
+
+  </fieldset>
+
+  <pre> FormValue: {{ form.value | json }} </pre>
+
+</form>

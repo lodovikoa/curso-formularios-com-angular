@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Pipe } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ErrorMessagesComponent } from '../../../shared/error-messages/components/error-messages/error-messages.component';
 import { JsonPipe } from '@angular/common';
 import { avoidRepeatedEmail } from './validations/avoid-repeated-email.validator';
+import { UserEmailsService } from './services/user-emails.service';
+import { UserEmails } from './interfaces/user-emails';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-form-array',
@@ -13,10 +16,17 @@ import { avoidRepeatedEmail } from './validations/avoid-repeated-email.validator
 })
 export class FormArrayComponent {
 
-  protected form = new FormGroup({
-    name: new FormControl('', { validators: [Validators.required] }),
-    emails: new FormArray([ this.createFormControl() ], { validators: [Validators.required] })
-  });
+  private readonly userEmailsService = inject(UserEmailsService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  protected form = this.createForm(this.activatedRoute.snapshot.data['userEmails'] as UserEmails);
+
+  protected save() {
+    this.userEmailsService.update(this.form.value as UserEmails)
+      .subscribe(() => {
+
+      });
+  }
 
   protected addEmail() {
     this.form.controls.emails.push(this.createFormControl());
@@ -26,7 +36,44 @@ export class FormArrayComponent {
     this.form.controls.emails.removeAt(index);
   }
 
-  private createFormControl() {
-    return new FormControl('', { validators: [Validators.required, Validators.email, avoidRepeatedEmail ] });
+  moveUp(index: number) {
+    this.moveItem(index, index - 1);
+  }
+
+  moveDown(index: number) {
+    this.moveItem(index, index + 1);
+  }
+
+  private createFormControl(initialValue: string = '') {
+    return new FormControl(initialValue, { validators: [Validators.required, Validators.email, avoidRepeatedEmail ] });
+  }
+
+  private moveItem(fromIndex: number, toIndex: number) {
+    const fromIndexControl = this.form.controls.emails.at(fromIndex);
+    const toIndexControl = this.form.controls.emails.at(toIndex);
+
+    this.form.controls.emails.removeAt(fromIndex);
+    this.form.controls.emails.insert(fromIndex, toIndexControl);
+
+    this.form.controls.emails.removeAt(toIndex);
+    this.form.controls.emails.insert(toIndex, fromIndexControl);
+
+    this.form.controls.emails.updateValueAndValidity();
+  }
+
+  private createForm(userEmails: UserEmails) {
+    let emailControls;
+
+    if(userEmails.emails.length === 0) {
+      emailControls =  [this.createFormControl()];
+    } else {
+      emailControls = userEmails.emails.map((email)=> this.createFormControl(email));
+    }
+
+
+    return new FormGroup({
+      name: new FormControl(userEmails.name, { validators: [Validators.required] }),
+      emails: new FormArray(emailControls, { validators: [Validators.required] }),
+    });
   }
 }

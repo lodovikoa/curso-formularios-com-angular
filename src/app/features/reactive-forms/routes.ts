@@ -8,6 +8,10 @@ import { ManipulateControlsComponent } from './6.manipulate-controls/manipulate-
 import { FormRecordComponent } from './7.form-record/form-record.component';
 import { SubFormsComponent } from './8.sub-forms/sub-forms.component';
 import { FormArrayComponent } from './9.form-array/form-array.component';
+import { getUserEmailsResolver } from './9.form-array/resolvers/get-user-emails.resolver';
+import { UtilityFunctionComponent } from './10.utility-functions/utility-function.component';
+import { FormBuilderComponent } from './11.form-builder/form-builder.component';
+import { ControlValueAcessorComponent } from './12.control-value-acessor/control-value-acessor.component';
 
 export const reactiveFormsFormControlRoutes: Routes = [
   { path: 'form-control', component: FormControlComponent },
@@ -18,5 +22,9 @@ export const reactiveFormsFormControlRoutes: Routes = [
   { path: 'manipulate-controls', component: ManipulateControlsComponent },
   { path: 'form-record', component: FormRecordComponent },
   { path: 'sub-forms', component: SubFormsComponent },
-  { path: 'form-array', component: FormArrayComponent }
+  { path: 'form-array', component: FormArrayComponent, resolve: { userEmails: getUserEmailsResolver } },
+  { path: 'utility-function', component: UtilityFunctionComponent },
+  { path: 'form-builder', component: FormBuilderComponent },
+  { path: 'control-value-acessor', component: ControlValueAcessorComponent }
+
 ];

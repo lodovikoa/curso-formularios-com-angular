@@ -1,4 +1,13 @@
 {
+  "user-emails": {
+    "name": "Lodoviko",
+    "emails": [
+      "lodoviko03@gmail.com",
+      "lodoviko01@gmail.com",
+      "teste04@n.vom",
+      "teste05@t.com"
+    ]
+  },
   "user-preferences": {
     "receiveEmails": false,
     "receivePushNotifications": false,

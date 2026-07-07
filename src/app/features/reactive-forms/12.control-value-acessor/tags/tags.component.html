@@ -1,0 +1,11 @@
+<div class="flex flex-wrap gap-2 mb-2">
+  @for (tag of tags(); track tag) {
+    <div> {{ tag }}</div>
+
+  }
+</div>
+
+<div class="join">
+  <input class="input input-xs join-item" placeholder="Digite uma tag..." [(ngModel)]="newTag" />
+  <button class="btn btn-xs btn-primary join-item rounded-r-full" (click)="addTag()">Adicionar</button>
+</div>
