@@ -1,11 +1,18 @@
 <div class="flex flex-wrap gap-2 mb-2">
   @for (tag of tags(); track tag) {
-    <div> {{ tag }}</div>
+    <div class="join">
+      <div class="join-item badge" [class]="isDisable() ? 'badge-ghost' : 'badge-soft badge-primary'">
+        {{ tag }}
+      </div>
+      <button class="join-item btn btn-xs btn-soft btn-primary" [disabled]="isDisable()" (click)="removeTag(tag)">X</button>
 
+
+    </div>
   }
 </div>
 
 <div class="join">
-  <input class="input input-xs join-item" placeholder="Digite uma tag..." [(ngModel)]="newTag" />
-  <button class="btn btn-xs btn-primary join-item rounded-r-full" (click)="addTag()">Adicionar</button>
+  <label for="tagInput" class="sr-only">Digite uma tag</label>
+  <input id="tagInput" class="input input-xs join-item" placeholder="Digite uma tag..." [(ngModel)]="newTag" (blur)="onTouchedFn()" [disabled]="isDisable()" />
+  <button class="btn btn-xs btn-primary join-item rounded-r-full" (click)="addTag(); onTouchedFn()" [disabled]="isDisable()">Adicionar</button>
 </div>

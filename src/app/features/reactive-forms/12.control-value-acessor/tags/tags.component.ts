@@ -17,27 +17,44 @@ export class TagsComponent implements ControlValueAccessor {
 
   protected tags = signal<string[]>([]);
   protected newTag = signal('');
+  private changeFn = (tags: string[])  => {};
+  protected onTouchedFn = () => {};
+  protected isDisable = signal(false);
 
-  addTag() {
+  protected removeTag(tag: string) {
+    this.tags.update(tags => {
+      return tags.filter(t => t !== tag);
+    });
+
+    this.changeFn(this.tags());
+  }
+
+  protected addTag() {
     const tag = this.newTag().trim();
     this.tags.update(tags => [...tags, tag]);
+    this.changeFn(this.tags());
     this.newTag.set('');
   }
 
   writeValue(value: string[]): void {
-    this.tags.set(value);
+    if(!Array.isArray(value)) {
+      this.tags.set([]);
+    } else {
+      this.tags.set(value);
+    }
+
   }
 
-  registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+  registerOnChange(fn: (tags: string[]) => {}): void {
+    this.changeFn = fn;
   }
 
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onTouchedFn = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
+    this.isDisable.set(isDisabled);
   }
 
 }
