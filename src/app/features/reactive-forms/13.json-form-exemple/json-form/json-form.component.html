@@ -1,0 +1,40 @@
+<form [formGroup]="form()" (ngSubmit)="onSubmit()">
+  @for (item of fields(); track item.name) {
+    @switch (item.type) {
+      @case (fieldType.Text) {
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend"> {{ item.label }} </legend>
+        <input type="text" class="input" [placeholder]="item.placeholder" [formControlName]="item.name" />
+        <p class="label">You can edit page title later on from settings</p>
+        <app-error-messages [control]="form().get(item.name)!" />
+      </fieldset>
+
+      } @case (fieldType.Email) {
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend"> {{ item.label }} </legend>
+        <input type="email" class="input" [placeholder]="item.placeholder || item.label" [formControlName]="item.name" />
+        <p class="label">You can edit page title later on from settings</p>
+        <app-error-messages [control]="form().get(item.name)!" />
+      </fieldset>
+
+      } @case (fieldType.Select) {
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend"> {{ item.label }} </legend>
+        <select class="select" [formControlName]="item.name">
+          @if (item.placeholder) {
+            <option disabled selected> {{ item.placeholder || item.label }} </option>
+          }
+          @for (option of item.options; track option) {
+            <option [ngValue]="option.value"> {{ option.label }} </option>
+          }
+        </select>
+        <app-error-messages [control]="form().get(item.name)!" />
+      </fieldset>
+      }
+    }
+  }
+
+  <button class="btn btn-primary" [disabled]="form().invalid"> {{ submitLabel() }} </button>
+
+
+</form>
