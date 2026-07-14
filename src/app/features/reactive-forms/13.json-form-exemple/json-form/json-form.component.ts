@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { JsonFormFieldSchema, JsonFormSchema } from './interfaces/form.schema.interface';
 import { FormControl, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { FieldType } from './enums/field-type.enum';
 import { ErrorMessagesComponent } from "../../../../shared/error-messages/components/error-messages/error-messages.component";
+import { JsonPipe } from '@angular/common';
 
 const fieldTypeValidators = new Map<FieldType, ValidatorFn[]>([
   [FieldType.Email, [Validators.email]],
@@ -10,7 +11,7 @@ const fieldTypeValidators = new Map<FieldType, ValidatorFn[]>([
 
 @Component({
   selector: 'app-json-form',
-  imports: [FormsModule, ReactiveFormsModule, ErrorMessagesComponent],
+  imports: [FormsModule, ReactiveFormsModule, ErrorMessagesComponent, JsonPipe],
   templateUrl: './json-form.component.html',
   styleUrl: './json-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,6 +23,7 @@ export class JsonFormComponent {
   schema = input.required<JsonFormSchema>();
   protected fieldType = FieldType;
   protected fields = computed(() => this.schema().fields);
+  protected formValidators = computed(() => this.schema().validators);
   protected submitLabel = computed(() => this.schema().submitLabel);
 
   protected formControls = computed(() => {
@@ -31,10 +33,13 @@ export class JsonFormComponent {
     }, {});
   });
 
-  protected form = computed(() => this.fb.record(this.formControls()));
+  protected form = computed(() => this.fb.record(this.formControls(), {
+    validators: this.formValidators()
+  }));
+  protected submitOutput = output<Record<string, unknown>>({alias: 'forSubmit'});
 
   protected onSubmit() {
-
+    this.submitOutput.emit(this.form().value);
   }
 
   private createFormControl(field: JsonFormFieldSchema) {
@@ -46,6 +51,11 @@ export class JsonFormComponent {
       control.addValidators(fieldTypeValidators.get(field.type)!);
     }
 
+    if(field.validators) {
+      control.addValidators(field.validators);
+    }
+
     return control;
   }
+
 }

@@ -5,7 +5,6 @@
       <fieldset class="fieldset">
         <legend class="fieldset-legend"> {{ item.label }} </legend>
         <input type="text" class="input" [placeholder]="item.placeholder" [formControlName]="item.name" />
-        <p class="label">You can edit page title later on from settings</p>
         <app-error-messages [control]="form().get(item.name)!" />
       </fieldset>
 
@@ -13,7 +12,13 @@
       <fieldset class="fieldset">
         <legend class="fieldset-legend"> {{ item.label }} </legend>
         <input type="email" class="input" [placeholder]="item.placeholder || item.label" [formControlName]="item.name" />
-        <p class="label">You can edit page title later on from settings</p>
+        <app-error-messages [control]="form().get(item.name)!" />
+      </fieldset>
+
+      } @case (fieldType.Password) {
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend"> {{ item.label }} </legend>
+        <input type="password" class="input" [placeholder]="item.placeholder || item.label" [formControlName]="item.name" />
         <app-error-messages [control]="form().get(item.name)!" />
       </fieldset>
 
@@ -35,6 +40,7 @@
   }
 
   <button class="btn btn-primary" [disabled]="form().invalid"> {{ submitLabel() }} </button>
+  <app-error-messages [control]="form()" />
 
-
+  <pre> {{ form().value | json }} </pre>
 </form>
