@@ -13,6 +13,7 @@ import { UtilityFunctionComponent } from './10.utility-functions/utility-functio
 import { FormBuilderComponent } from './11.form-builder/form-builder.component';
 import { ControlValueAcessorComponent } from './12.control-value-acessor/control-value-acessor.component';
 import { JsonFormExempleComponent } from './13.json-form-exemple/json-form-exemple.component';
+import { ControlContainerComponent } from './14.control-container/control-container.component';
 
 export const reactiveFormsFormControlRoutes: Routes = [
   { path: 'form-control', component: FormControlComponent },
@@ -27,6 +28,7 @@ export const reactiveFormsFormControlRoutes: Routes = [
   { path: 'utility-function', component: UtilityFunctionComponent },
   { path: 'form-builder', component: FormBuilderComponent },
   { path: 'control-value-acessor', component: ControlValueAcessorComponent },
-  { path: 'json-form', component: JsonFormExempleComponent }
+  { path: 'json-form', component: JsonFormExempleComponent },
+  { path: 'control-container', component: ControlContainerComponent }
 
 ];

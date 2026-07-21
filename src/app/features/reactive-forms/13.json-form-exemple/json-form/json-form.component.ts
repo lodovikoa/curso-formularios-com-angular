@@ -4,6 +4,8 @@ import { FormControl, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, 
 import { FieldType } from './enums/field-type.enum';
 import { ErrorMessagesComponent } from "../../../../shared/error-messages/components/error-messages/error-messages.component";
 import { JsonPipe } from '@angular/common';
+import { InputFieldComponent } from "./components/input-field/input-field.component";
+import { SelectFieldComponent } from "./components/select-field/select-field.component";
 
 const fieldTypeValidators = new Map<FieldType, ValidatorFn[]>([
   [FieldType.Email, [Validators.email]],
@@ -11,7 +13,7 @@ const fieldTypeValidators = new Map<FieldType, ValidatorFn[]>([
 
 @Component({
   selector: 'app-json-form',
-  imports: [FormsModule, ReactiveFormsModule, ErrorMessagesComponent, JsonPipe],
+  imports: [FormsModule, ReactiveFormsModule, ErrorMessagesComponent, JsonPipe, InputFieldComponent, SelectFieldComponent],
   templateUrl: './json-form.component.html',
   styleUrl: './json-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

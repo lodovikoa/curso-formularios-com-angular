@@ -1,0 +1,14 @@
+<ng-container [formGroup]="form">
+  <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+    <legend class="fieldset-legend">Dados de pagamento</legend>
+
+    <label for="dsCrediCard" class="label">Cartão de crédito</label>
+    <input id="dsCrediCard" type="text" class="input" placeholder="0000.0000.0000.0000" formControlName="crediCard" />
+
+    <label for="dsExpiry" class="label">Expiração</label>
+    <input id="dsExpiry" type="text" class="input" placeholder="MM/yy" formControlName="expiry" />
+
+    <label for="dsCvv" class="label">CVV</label>
+    <input id="dsCvv" type="text" class="input" placeholder="000" formControlName="cvv" />
+  </fieldset>
+</ng-container>
